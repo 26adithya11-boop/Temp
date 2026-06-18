@@ -1,0 +1,308 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Playfair Display";
+  src: url("/assets/fonts/PlayfairDisplay.woff2") format("woff2");
+  font-weight: 400 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "General Sans";
+  src: url("/assets/fonts/GeneralSans.woff2") format("woff2");
+  font-weight: 200 700;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --radius: 1rem;
+    /* Dark charcoal theme */
+    --background: 0.13 0.005 240;
+    --foreground: 0.95 0.005 80;
+    --card: 0.16 0.007 240;
+    --card-foreground: 0.95 0.005 80;
+    --popover: 0.14 0.006 240;
+    --popover-foreground: 0.95 0.005 80;
+    /* Gold primary */
+    --primary: 0.76 0.09 82;
+    --primary-foreground: 0.12 0.005 240;
+    --secondary: 0.19 0.008 240;
+    --secondary-foreground: 0.95 0.005 80;
+    --muted: 0.19 0.008 240;
+    --muted-foreground: 0.65 0.01 240;
+    --accent: 0.76 0.09 82;
+    --accent-foreground: 0.12 0.005 240;
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.76 0.09 82 / 20%;
+    --input: 0.76 0.09 82 / 15%;
+    --ring: 0.76 0.09 82;
+    --gold: 0.76 0.09 82;
+    --gold-hover: 0.68 0.1 82;
+    --chart-1: 0.646 0.222 41.116;
+    --chart-2: 0.6 0.118 184.704;
+    --chart-3: 0.398 0.07 227.392;
+    --chart-4: 0.828 0.189 84.429;
+    --chart-5: 0.769 0.188 70.08;
+    --sidebar: 0.16 0.007 240;
+    --sidebar-foreground: 0.95 0.005 80;
+    --sidebar-primary: 0.76 0.09 82;
+    --sidebar-primary-foreground: 0.12 0.005 240;
+    --sidebar-accent: 0.19 0.008 240;
+    --sidebar-accent-foreground: 0.95 0.005 80;
+    --sidebar-border: 0.76 0.09 82 / 20%;
+    --sidebar-ring: 0.76 0.09 82;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "General Sans", "Plus Jakarta Sans", system-ui, sans-serif;
+    background: linear-gradient(
+      135deg,
+      oklch(0.12 0.005 240) 0%,
+      oklch(0.15 0.008 240) 100%
+    );
+    min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: "Playfair Display", "Georgia", serif;
+  }
+}
+
+@layer utilities {
+  .gold-gradient {
+    background: linear-gradient(
+      135deg,
+      oklch(0.76 0.09 82) 0%,
+      oklch(0.65 0.1 82) 100%
+    );
+  }
+
+  .gold-text {
+    color: oklch(var(--gold));
+  }
+
+  .glass-panel {
+    background: oklch(0.16 0.007 240 / 0.9);
+    backdrop-filter: blur(12px);
+    border: 1px solid oklch(0.76 0.09 82 / 0.2);
+  }
+
+  .card-hover {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Groovy gradient animation for buttons */
+  @keyframes groovy-gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  .groovy-btn {
+    background: linear-gradient(
+      270deg,
+      #a855f7,
+      #ec4899,
+      #f97316,
+      #eab308,
+      #a855f7
+    );
+    background-size: 300% 300%;
+    animation: groovy-gradient 4s ease infinite;
+    color: white;
+    font-weight: 700;
+    border-radius: 9999px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .groovy-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.25) 50%,
+      transparent 100%
+    );
+    background-size: 200% auto;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .groovy-btn:hover::after {
+    opacity: 1;
+    animation: shimmer 0.8s linear;
+  }
+
+  .groovy-btn:hover {
+    transform: scale(1.06);
+    box-shadow: 0 8px 32px rgba(168, 85, 247, 0.45);
+  }
+
+  .groovy-btn:active {
+    transform: scale(0.97);
+  }
+
+  .groovy-outline-btn {
+    border: 2px solid transparent;
+    background: linear-gradient(#0f0f14, #0f0f14) padding-box,
+      linear-gradient(270deg, #a855f7, #ec4899, #f97316, #eab308) border-box;
+    color: #e2c46b;
+    font-weight: 600;
+    border-radius: 9999px;
+    transition: all 0.25s ease;
+  }
+
+  .groovy-outline-btn:hover {
+    background: linear-gradient(270deg, #a855f7, #ec4899, #f97316, #eab308)
+      padding-box, linear-gradient(270deg, #a855f7, #ec4899, #f97316, #eab308)
+      border-box;
+    color: white;
+    box-shadow: 0 4px 20px rgba(236, 72, 153, 0.35);
+  }
+
+  /* Nav call button with glow */
+  .nav-call-btn {
+    background: linear-gradient(
+      135deg,
+      oklch(0.76 0.09 82) 0%,
+      oklch(0.65 0.1 82) 100%
+    );
+    color: oklch(0.12 0.005 240);
+    font-weight: 700;
+    border-radius: 9999px;
+    transition: all 0.25s ease;
+    animation: nav-glow 2.5s ease-in-out infinite;
+  }
+
+  @keyframes nav-glow {
+    0%,
+    100% {
+      box-shadow: 0 0 8px 2px oklch(0.76 0.09 82 / 0.5);
+    }
+    50% {
+      box-shadow: 0 0 18px 6px oklch(0.76 0.09 82 / 0.8);
+    }
+  }
+
+  .nav-call-btn:hover {
+    transform: scale(1.07);
+  }
+
+  /* iOS-style service cards */
+  .service-card {
+    border-radius: 1.75rem;
+    padding: 1.75rem;
+    transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow
+      0.28s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: "";
+    position: absolute;
+    top: -40%;
+    left: -40%;
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.18) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  .service-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 24px 56px rgba(0, 0, 0, 0.3);
+  }
+
+  .service-card-icon {
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    backdrop-filter: blur(4px);
+  }
+
+  @keyframes pulse-ring {
+    0% {
+      box-shadow: 0 0 0 0 oklch(0.76 0.09 82 / 0.6);
+    }
+    70% {
+      box-shadow: 0 0 0 20px oklch(0.76 0.09 82 / 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 oklch(0.76 0.09 82 / 0);
+    }
+  }
+
+  .pulse-call {
+    animation: pulse-ring 2s infinite;
+  }
+
+  @keyframes float-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-float-up {
+    animation: float-up 0.6s ease forwards;
+  }
+
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      oklch(0.76 0.09 82 / 0.4),
+      transparent
+    );
+  }
+}
